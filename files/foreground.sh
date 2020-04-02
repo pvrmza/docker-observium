@@ -48,6 +48,7 @@ trap "kill -TERM -$pgrp; exit" EXIT TERM KILL SIGKILL SIGTERM SIGQUIT
 # export env 
 printenv | egrep OBSERVIUM | sed 's/^\(.*\)$/export \1/g' > /etc/cron.env
 chmod 500 /etc/cron.env
+touch /var/log/cron.log
 # start up cron
 /usr/sbin/cron 
 # start up apache
