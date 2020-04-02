@@ -25,7 +25,7 @@ services:
     restart: always
     environment:
       - TZ="America/Argentina/Mendoza" 
-      - VIRTUAL_HOST=phpipam.micasa.local
+      - VIRTUAL_HOST=observium.micasa.local
       - VIRTUAL_PORT=80 
       - OBSERVIUM_DB_HOST=db 
       - OBSERVIUM_DB_USER=observium 
