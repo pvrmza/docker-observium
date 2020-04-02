@@ -39,13 +39,13 @@ RUN echo -e "TLS_REQCERT\tnever" >> /etc/ldap/ldap.conf && \
 
 #
 COPY files/observium-community-latest.tar.gz /opt
-RUN cd /opt && \
+RUN cd /opt && wget -c http://www.observium.org/observium-community-latest.tar.gz &&\
     tar zxvf observium-community-latest.tar.gz && \
     rm -rf observium-community-latest.tar.gz
 
 
 #Puertos y Volumenes
-VOLUME ["/config", "/var/lib/mysql"]
-EXPOSE 80 443 3386
+VOLUME ["/config" ]
+EXPOSE 80 443 
 ENTRYPOINT ["/etc/apache2/foreground.sh"]
 

@@ -15,7 +15,7 @@ else
 fi
 
 
-wget -c http://www.observium.org/observium-community-latest.tar.gz -O files/observium-community-latest.tar.gz
+#wget -c http://www.observium.org/observium-community-latest.tar.gz -O files/observium-community-latest.tar.gz
 
 echo "Building $IMAGE con tag $TAG"
 
