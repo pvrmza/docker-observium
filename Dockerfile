@@ -16,7 +16,7 @@ RUN apt update && apt -y dist-upgrade && \
     apt -y install libapache2-mod-php7.2 php7.2-cli php7.2-mysql php7.2-mysqli \
     php7.2-gd php7.2-json php-pear snmp fping mysql-client python-mysqldb \
     rrdtool subversion whois mtr-tiny ipmitool graphviz imagemagick apache2 \
-    libvirt-bin wget
+    libvirt-bin wget vim
 
 # Cleanup, this is ran to reduce the resulting size of the image.
 RUN apt-get clean autoclean && \

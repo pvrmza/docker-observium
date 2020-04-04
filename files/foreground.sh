@@ -19,27 +19,41 @@ chown www-data:www-data /config/rrd
 #
 if [ ! -e /config/config.php  ]; then 
 	cp /opt/observium/config.php.* /config/config.php 
-	rm -rf /opt/observium/config.php
-	ln -s /config/config.php /opt/observium/config.php 
 	sed -i "s/'localhost'/getenv\('OBSERVIUM_DB_HOST'\)/g" /config/config.php 
 	sed -i "s/'USERNAME'/getenv\('OBSERVIUM_DB_USER'\)/g" /config/config.php 
 	sed -i "s/'PASSWORD'/getenv\('OBSERVIUM_DB_PASS'\)/g" /config/config.php 
 	sed -i "s/'observium'/getenv\('OBSERVIUM_DB_DB'\)/g" /config/config.php 
 fi
+rm -rf /opt/observium/config.php
+ln -s /config/config.php /opt/observium/config.php 
 
 while ! mysqladmin ping -h"$OBSERVIUM_DB_HOST" --silent; do
 	echo "$OBSERVIUM_DB_HOST not is alive... "
     sleep 1
 done
 
+# Initial Setup
 cd /opt/observium 
 # Setup the MySQL database and insert the default schema
 ./discovery.php -u
 # add user
 ./adduser.php $OBSERVIUM_ADMIN_USER $OBSERVIUM_ADMIN_PASS 10
-# Perform Initial Discovery and Poll
-./discovery.php -h all
-./poller.php -h all
+#####
+# import devices
+if [ -e /config/hosts  ]; then 
+	cat /config/hosts >> /etc/hosts
+	while read -r line; do
+		device=`echo $line | awk '{ print $2 }'`
+		./add_device.php $device
+	done < /config/hosts
+fi	
+
+if [ -e /config/devices  ]; then 
+	./add_device.php /config/devices
+fi	
+
+# Perform Initial Discovery ... in backgound
+./discovery.php -h all & 
 
 #
 read pid cmd state ppid pgrp session tty_nr tpgid rest < /proc/self/stat
@@ -54,3 +68,4 @@ touch /var/log/cron.log
 # start up apache
 source /etc/apache2/envvars
 exec apache2 -D FOREGROUND
+
