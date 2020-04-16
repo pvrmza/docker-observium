@@ -4,7 +4,22 @@ another observium in docker or another docker with observium...
 
 Observium is network monitoring with intuition. It is a low-maintenance auto-discovering network monitoring platform supporting a wide range of device types, platforms and operating systems including Cisco, Windows, Linux, HP, Juniper, Dell, FreeBSD, Brocade, Netscaler, NetApp and many more. Observium focuses on providing a beautiful and powerful yet simple and intuitive interface to the health and status of your network. For more information, go to http://www.observium.org site.
 
+## Features
 
+* Import hosts from /config/hosts to /etc/hosts, then automatically add them to observium
+* Automatically import devices from /config/devices
+
+### /config/devices 
+SNMP v1 or v2c
+```
+  <hostname> [community] [v1|v2c] [port] [udp|udp6|tcp|tcp6]
+  <hostname> [community] [v1|v2c] [port] [udp|udp6|tcp|tcp6]
+```
+SNMP v3 
+```
+  <hostname> [any|nanp|anp|ap] [v3] [user] [password] [enckey] [md5|sha] [aes|des] [port] [udp|udp6|tcp|tcp6]
+  <hostname> [any|nanp|anp|ap] [v3] [user] [password] [enckey] [md5|sha] [aes|des] [port] [udp|udp6|tcp|tcp6]
+```
 
 ## Usage
 Either follow the choice A. or B. below to run Observium.
