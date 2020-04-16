@@ -4,10 +4,11 @@ LABEL maintainer="Pablo A. Vargas <pablo@pampa.cloud>"
 
 # Environment
 ENV DEBIAN_FRONTEND noninteractive
-ENV OBSERVIUM_DB_HOST=localhost 
+ENV OBSERVIUM_DB_HOST=db 
 ENV OBSERVIUM_DB_USER=observium 
 ENV OBSERVIUM_DB_PASS=observiumpwd 
 ENV OBSERVIUM_DB_DB=observium
+
 ENV OBSERVIUM_ADMIN_USER=admin
 ENV OBSERVIUM_ADMIN_PASS=admin
 
