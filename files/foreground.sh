@@ -1,7 +1,10 @@
 #!/bin/bash
 
+# turn on bash's job control
+set -m
+
 # 
-[ -z $OBSERVIUM_DB_HOST ] && OBSERVIUM_DB_HOST=localhost
+[ -z $OBSERVIUM_DB_HOST ] && OBSERVIUM_DB_HOST=db
 [ -z $OBSERVIUM_DB_USER ] && OBSERVIUM_DB_USER=observium
 [ -z $OBSERVIUM_DB_PASS ] && OBSERVIUM_DB_PASS=observiumpwd
 [ -z $OBSERVIUM_DB_DB ] && OBSERVIUM_DB_DB=observium
@@ -27,9 +30,10 @@ fi
 rm -rf /opt/observium/config.php
 ln -s /config/config.php /opt/observium/config.php 
 
+#
 while ! mysqladmin ping -h"$OBSERVIUM_DB_HOST" --silent; do
 	echo "$OBSERVIUM_DB_HOST not is alive... "
-    sleep 1
+    sleep 2
 done
 
 # Initial Setup
@@ -48,24 +52,17 @@ if [ -e /config/hosts  ]; then
 	done < /config/hosts
 fi	
 
-if [ -e /config/devices  ]; then 
-	./add_device.php /config/devices
+if [ -e /config/devices  ]; then
+ 	./add_device.php /config/devices
 fi	
 
 # Perform Initial Discovery ... in backgound
 ./discovery.php -h all & 
 
-#
-read pid cmd state ppid pgrp session tty_nr tpgid rest < /proc/self/stat
-trap "kill -TERM -$pgrp; exit" EXIT TERM KILL SIGKILL SIGTERM SIGQUIT
+####################################3
 # cron
 # export env 
 printenv | egrep OBSERVIUM | sed 's/^\(.*\)$/export \1/g' > /etc/cron.env
 chmod 500 /etc/cron.env
-touch /var/log/cron.log
-# start up cron
-/usr/sbin/cron 
-# start up apache
-source /etc/apache2/envvars
-exec apache2 -D FOREGROUND
-
+#
+supervisord -c /etc/supervisord.conf

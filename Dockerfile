@@ -16,7 +16,7 @@ RUN apt update && apt -y dist-upgrade && \
     apt -y install libapache2-mod-php7.2 php7.2-cli php7.2-mysql php7.2-mysqli \
     php7.2-gd php7.2-json php-pear snmp fping mysql-client python-mysqldb \
     rrdtool subversion whois mtr-tiny ipmitool graphviz imagemagick apache2 \
-    libvirt-bin wget vim
+    libvirt-bin wget vim supervisor
 
 # Cleanup, this is ran to reduce the resulting size of the image.
 RUN apt-get clean autoclean && \
@@ -31,11 +31,12 @@ RUN a2dismod mpm_event && \
 #
 COPY files/apache-observium.conf /etc/apache2/sites-available/000-default.conf
 COPY files/cron-observium /etc/cron.d/observium
-COPY files/foreground.sh /etc/apache2/foreground.sh
+COPY files/supervisord.conf /etc/supervisord.conf
+COPY files/foreground.sh /etc/foreground.sh
 
 RUN echo -e "TLS_REQCERT\tnever" >> /etc/ldap/ldap.conf && \
     chmod 0644 /etc/cron.d/observium && \
-    chmod +x /etc/apache2/foreground.sh
+    chmod +x /etc/foreground.sh
 
 #
 RUN cd /opt && wget -c http://www.observium.org/observium-community-latest.tar.gz &&\
@@ -46,5 +47,5 @@ RUN cd /opt && wget -c http://www.observium.org/observium-community-latest.tar.g
 #Puertos y Volumenes
 VOLUME ["/config" ]
 EXPOSE 80 443 
-ENTRYPOINT ["/etc/apache2/foreground.sh"]
+CMD ["/etc/foreground.sh"]
 
