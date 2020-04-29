@@ -21,8 +21,8 @@ services:
       - db
     links:
       - db:db
-    image: docker-observium:200429
-    #image: pvrmza/docker-observium
+    #image: docker-observium:200429
+    image: pvrmza/docker-observium
     restart: always
     environment:
       - TZ="America/Argentina/Mendoza" 
