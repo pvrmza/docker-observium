@@ -1,23 +1,36 @@
 
-# docker-observium
-another observium in docker or another docker with observium...
+# docker-observium unattended deploy
+not another observium in docker...
 
 Observium is network monitoring with intuition. It is a low-maintenance auto-discovering network monitoring platform supporting a wide range of device types, platforms and operating systems including Cisco, Windows, Linux, HP, Juniper, Dell, FreeBSD, Brocade, Netscaler, NetApp and many more. Observium focuses on providing a beautiful and powerful yet simple and intuitive interface to the health and status of your network. For more information, go to http://www.observium.org site.
 
 ## Features
-
+* All configurations can be added from environment variables
 * Import hosts from /config/hosts to /etc/hosts, then automatically add them to observium
 * Automatically import devices from /config/devices
 
-### /config/devices 
+### Config values
+All environment variables starting OBSERVIUM_ will be transformed to $config and added automatically to the config.php file. Double _ separates array
+
+```
+    **OBSERVIUM_**db_user=observium -> $config['db_user']="observium";
+    **OBSERVIUM_**snmp__community__=public -> $config[snmp][community][]="public";
+```
+List of variables and default values: https://github.com/pvrmza/docker-observium/blob/master/files/defaults.inc.php
+
+
+### Hosts file
+Add multiple devices at once using a text file containing one line per device, indicating the IP and the host name
+
+### Devices file
+Adding multiple devices at once using a text file containing one line per device (https://docs.observium.org/add_device/)
+
 SNMP v1 or v2c
 ```
-  <hostname> [community] [v1|v2c] [port] [udp|udp6|tcp|tcp6]
-  <hostname> [community] [v1|v2c] [port] [udp|udp6|tcp|tcp6]
+    <hostname> [community] [v1|v2c] [port] [udp|udp6|tcp|tcp6]
 ```
 SNMP v3 
 ```
-  <hostname> [any|nanp|anp|ap] [v3] [user] [password] [enckey] [md5|sha] [aes|des] [port] [udp|udp6|tcp|tcp6]
   <hostname> [any|nanp|anp|ap] [v3] [user] [password] [enckey] [md5|sha] [aes|des] [port] [udp|udp6|tcp|tcp6]
 ```
 
