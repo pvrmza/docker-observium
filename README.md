@@ -13,16 +13,16 @@ Observium is network monitoring with intuition. It is a low-maintenance auto-dis
 All environment variables starting OBSERVIUM_ will be transformed to $config and added automatically to the config.php file. Double _ separates array
 
 ```
-    **OBSERVIUM_**db_user=observium -> $config['db_user']="observium";
-    **OBSERVIUM_**snmp__community__=public -> $config[snmp][community][]="public";
+    OBSERVIUM_db_user=observium     ->  $config['db_user']="observium";
+    OBSERVIUM_snmp__community__=public    ->  $config[snmp][community][]="public";
 ```
 List of variables and default values: https://github.com/pvrmza/docker-observium/blob/master/files/defaults.inc.php
 
 
-### Hosts file
+### Hosts file: /config/hosts
 Add multiple devices at once using a text file containing one line per device, indicating the IP and the host name
 
-### Devices file
+### Devices file: /config/devices
 Adding multiple devices at once using a text file containing one line per device (https://docs.observium.org/add_device/)
 
 SNMP v1 or v2c
@@ -90,7 +90,7 @@ Either follow the choice A. or B. below to run Observium.
 | **OBSERVIUM_ADMIN_PASS** |  | admin |  |  
 
 # Volumen
-	/config
+  /config
 
 # Ports
-	80 443
+  80 443
