@@ -27,13 +27,13 @@ Either follow the choice A. or B. below to run Observium.
 ### A. Manual Run Containers
 - Prepare working directory for docker containers, for example below.
 ```
-  $ mkdir -p /home/docker/observium
+  $ sudo mkdir -p /home/docker/observium
   $ cd /home/docker/observium
-  $ mkidr data config
+  $ sudo mkidr data config
 ```
 - Run official MariaDB container
 ```
-  $ docker run --name observium_db \
+  $ docker run --name observium_db -d \
     -v /home/docker/observium/data:/var/lib/mysql \
     -e MYSQL_ROOT_PASSWORD=9459123fdf62cc04 \
     -e MYSQL_USER=observium \
@@ -45,14 +45,14 @@ Either follow the choice A. or B. below to run Observium.
 
 - Run this Observium container
 ```
-  $ docker run --name observium_app --link observium_db:db \
+  $ docker run --name observium_app --link observium_db:db -d \
     -v /home/docker/observium/config:/config \
     -e OBSERVIUM_ADMIN_USER=admin \
     -e OBSERVIUM_ADMIN_PASS=admin \
-    -e OBSERVIUM_DB_HOST=db \
-    -e OBSERVIUM_DB_USER=observium \
-    -e OBSERVIUM_DB_PASS=observiumpwd \
-    -e OBSERVIUM_DB_DB=observium \
+    -e OBSERVIUM_db_host=db \
+    -e OBSERVIUM_db_user=observium \
+    -e OBSERVIUM_db_pass=observiumpwd \
+    -e OBSERVIUM_db_name=observium \
     -p 8080:80 \
     pvrmza/docker-observium
 ```
@@ -69,10 +69,10 @@ Either follow the choice A. or B. below to run Observium.
 
 | Environment | Observium Config | Default value | Contenido | 
 | :--- |:--- | :--- | :---| 
-| **OBSERVIUM_DB_HOST** | $config['db_host'] | db | 'localhost' or 'db.isp.com' or IP |
-| **OBSERVIUM_DB_DB** | $config['db_name'] | observium | database name, eg observium |  
-| **OBSERVIUM_DB_USER** | $config['db_user'] | observium | your database username |  
-| **OBSERVIUM_DB_PASS** | $config['db_pass'] | observiumpwd | your database password |
+| **OBSERVIUM_db_host** | $config['db_host'] | db | 'localhost' or 'db.isp.com' or IP |
+| **OBSERVIUM_db_name** | $config['db_name'] | observium | database name, eg observium |  
+| **OBSERVIUM_db_user** | $config['db_user'] | observium | your database username |  
+| **OBSERVIUM_db_pass** | $config['db_pass'] | observiumpwd | your database password |
 | **OBSERVIUM_ADMIN_USER** |  | admin |  |  
 | **OBSERVIUM_ADMIN_PASS** |  | admin |  |  
 

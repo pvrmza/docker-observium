@@ -21,17 +21,20 @@ services:
       - db
     links:
       - db:db
-    #image: docker-observium:200415
-    image: pvrmza/docker-observium
+    image: docker-observium:200429
+    #image: pvrmza/docker-observium
     restart: always
     environment:
       - TZ="America/Argentina/Mendoza" 
       - VIRTUAL_HOST=observium.micasa.local
       - VIRTUAL_PORT=80 
-      - OBSERVIUM_DB_HOST=db 
-      - OBSERVIUM_DB_USER=observium 
-      - OBSERVIUM_DB_PASS=observiumpwd 
-      - OBSERVIUM_DB_DB=observium
+      - OBSERVIUM_db_extension=mysqli
+      - OBSERVIUM_db_host=db
+      - OBSERVIUM_db_user=observium
+      - OBSERVIUM_db_pass=observiumpwd
+      - OBSERVIUM_db_name=observium
+      - OBSERVIUM_snmp__community__=public
+      - OBSERVIUM_auth_mechanism=mysql
       - OBSERVIUM_ADMIN_USER=admin
       - OBSERVIUM_ADMIN_PASS=admin
     volumes:

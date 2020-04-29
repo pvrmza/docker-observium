@@ -4,17 +4,20 @@ LABEL maintainer="Pablo A. Vargas <pablo@pampa.cloud>"
 
 # Environment
 ENV DEBIAN_FRONTEND noninteractive
-ENV OBSERVIUM_DB_HOST=db 
-ENV OBSERVIUM_DB_USER=observium 
-ENV OBSERVIUM_DB_PASS=observiumpwd 
-ENV OBSERVIUM_DB_DB=observium
+ENV OBSERVIUM_db_extension=mysqli
+ENV OBSERVIUM_db_host=db
+ENV OBSERVIUM_db_user=observium
+ENV OBSERVIUM_db_pass=observiumpwd
+ENV OBSERVIUM_db_name=observium
+ENV OBSERVIUM_snmp__community__=public
+ENV OBSERVIUM_auth_mechanism=mysql
 
 ENV OBSERVIUM_ADMIN_USER=admin
 ENV OBSERVIUM_ADMIN_PASS=admin
 
 # update & upgrade & install base
-RUN apt update && apt -y dist-upgrade && \
-    apt -y install libapache2-mod-php7.2 php7.2-cli php7.2-mysql php7.2-mysqli \
+RUN apt-get update && apt-get -y dist-upgrade && \
+    apt-get -y install libapache2-mod-php7.2 php7.2-cli php7.2-mysql php7.2-mysqli \
     php7.2-gd php7.2-json php-pear snmp fping mysql-client python-mysqldb \
     rrdtool subversion whois mtr-tiny ipmitool graphviz imagemagick apache2 \
     libvirt-bin wget vim supervisor
