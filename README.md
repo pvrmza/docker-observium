@@ -10,13 +10,17 @@ Observium is network monitoring with intuition. It is a low-maintenance auto-dis
 * Automatically import devices from /config/devices
 
 ### Config values
-All environment variables starting OBSERVIUM_ will be transformed to $config and added automatically to the config.php file. Double _ separates array
+All environment variables starting OBSERVIUM_ will be transformed to $config and added automatically to the config.php file. Double _ separates array. Example:
 
-```
-    OBSERVIUM_db_user=observium 		-> 	$config['db_user']="observium";
-    OBSERVIUM_snmp__community__0=public 		  -> 	$config[snmp][community][0]="public";
-    OBSERVIUM_snmp__community__1=ortherpublic ->  $config[snmp][community][1]="ortherpublic";
-```
+| Environment | Observium Config | 
+| :--- |:--- |
+| OBSERVIUM_db_user=observium | $config['db_user']="observium"; | 
+| OBSERVIUM_snmp__community__0=public | $config['snmp']['community']['0']="public"; | 
+| OBSERVIUM_snmp__community__1=ortherpublic | $config['snmp']['community']['1']="ortherpublic"; | 
+| OBSERVIUM_housekeeping__rrd__invalid=TRUE | $config['housekeeping']['rrd']['invalid']=TRUE; |
+| OBSERVIUM_enable_syslog=1 |  $config['enable_syslog']=1; |
+
+
 List of variables and default values: https://github.com/pvrmza/docker-observium/blob/master/files/defaults.inc.php
 
 
