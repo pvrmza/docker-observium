@@ -14,7 +14,8 @@ All environment variables starting OBSERVIUM_ will be transformed to $config and
 
 ```
     OBSERVIUM_db_user=observium 		-> 	$config['db_user']="observium";
-    OBSERVIUM_snmp__community__=public 		-> 	$config[snmp][community][]="public";
+    OBSERVIUM_snmp__community__0=public 		  -> 	$config[snmp][community][0]="public";
+    OBSERVIUM_snmp__community__1=ortherpublic ->  $config[snmp][community][1]="ortherpublic";
 ```
 List of variables and default values: https://github.com/pvrmza/docker-observium/blob/master/files/defaults.inc.php
 
@@ -71,10 +72,12 @@ Either follow the choice A. or B. below to run Observium.
 ```
 
 ### B. Use Docker Composer
-- Download docker-compose.yml file from https://github.com/pvrmza/docker-observium/ github repository. 
-
 - Run both database and observium containers.
 ```
+  $ git clone https://github.com/pvrmza/docker-observium.git .
+  $ cd docker-observium
+  $ cp env_mysql_example .env_mysql
+  $ cp env_observium_example .env_observium
   $ docker-compose up
 ```
 

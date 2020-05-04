@@ -4,12 +4,8 @@ services:
   db:
     image: mariadb:10.5.2
     restart: always
-    environment:
-      - MYSQL_ROOT_PASSWORD=9459123fdf62cc04
-      - MYSQL_DATABASE=observium
-      - MYSQL_USER=observium
-      - MYSQL_PASSWORD=observiumpwd
-      - TZ="America/Argentina/Mendoza" 
+    env_file:
+      - .env_mysql
     volumes:
       - db_data:/data/db
     ports:
@@ -24,19 +20,8 @@ services:
     #image: docker-observium:200429
     image: pvrmza/docker-observium
     restart: always
-    environment:
-      - TZ="America/Argentina/Mendoza" 
-      - VIRTUAL_HOST=observium.micasa.local
-      - VIRTUAL_PORT=80 
-      - OBSERVIUM_db_extension=mysqli
-      - OBSERVIUM_db_host=db
-      - OBSERVIUM_db_user=observium
-      - OBSERVIUM_db_pass=observiumpwd
-      - OBSERVIUM_db_name=observium
-      - OBSERVIUM_snmp__community__=public
-      - OBSERVIUM_auth_mechanism=mysql
-      - OBSERVIUM_ADMIN_USER=admin
-      - OBSERVIUM_ADMIN_PASS=admin
+    env_file:
+      - .env_observium
     volumes:
       - config:/config
     ports:
