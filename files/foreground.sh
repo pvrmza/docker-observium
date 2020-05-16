@@ -4,6 +4,10 @@
 set -m
 
 #######
+# clean old pid
+find /var/run/ -type f -iname \*.pid -delete
+
+# observium data and logs
 mkdir -p /config/logs && mkdir -p /config/rrd 
 rm -rf /opt/observium/logs /opt/observium/rrd 
 ln -s /config/logs /opt/observium/logs 
@@ -30,7 +34,7 @@ ln -s /config/config.php /opt/observium/config.php
 
 #######
 while ! mysqladmin ping -h"$OBSERVIUM_db_host" --silent; do
-	echo "$OBSERVIUM_db_host not is alive... "
+	echo "Waiting... $OBSERVIUM_db_host not is alive..."
     sleep 5
 done
 
@@ -41,6 +45,7 @@ cd /opt/observium
 # add user
 ./adduser.php $OBSERVIUM_ADMIN_USER $OBSERVIUM_ADMIN_PASS 10
 #####
+
 # import devices
 if [ -e /config/hosts  ]; then 
 	cat /config/hosts >> /etc/hosts
@@ -55,8 +60,7 @@ if [ -e /config/devices  ]; then
 fi	
 
 # Perform Initial Discovery ... in backgound
-./discovery.php -h all & 
-
+#./discovery.php -h all & 
 ####################################3
 # cron
 # export env 

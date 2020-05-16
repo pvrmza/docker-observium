@@ -25,7 +25,7 @@ List of variables and default values: https://github.com/pvrmza/docker-observium
 
 
 ### Hosts file: /config/hosts
-Add multiple devices at once using a text file containing one line per device, indicating the IP and the host name
+Add host from /config/hosts to /etc/hosts and then add device to Observium
 
 ### Devices file: /config/devices
 Adding multiple devices at once using a text file containing one line per device (https://docs.observium.org/add_device/)
