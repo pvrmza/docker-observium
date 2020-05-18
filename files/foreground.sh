@@ -4,8 +4,9 @@
 set -m
 
 #######
-# clean old pid
+# clean old pid and "fix" cron
 find /var/run/ -type f -iname \*.pid -delete
+touch /etc/crontab  /etc/cron.d/observium /etc/cron.d/php 
 
 # observium data and logs
 mkdir -p /config/logs && mkdir -p /config/rrd 

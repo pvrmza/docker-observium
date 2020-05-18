@@ -4,23 +4,13 @@ LABEL maintainer="Pablo A. Vargas <pablo@pampa.cloud>"
 
 # Environment
 ENV DEBIAN_FRONTEND noninteractive
-ENV OBSERVIUM_db_extension=mysqli
-ENV OBSERVIUM_db_host=db
-ENV OBSERVIUM_db_user=observium
-ENV OBSERVIUM_db_pass=observiumpwd
-ENV OBSERVIUM_db_name=observium
-ENV OBSERVIUM_snmp__community__=public
-ENV OBSERVIUM_auth_mechanism=mysql
-
-ENV OBSERVIUM_ADMIN_USER=admin
-ENV OBSERVIUM_ADMIN_PASS=admin
 
 # update & upgrade & install base
 RUN apt-get update && apt-get -y dist-upgrade && \
     apt-get -y install libapache2-mod-php7.2 php7.2-cli php7.2-mysql php7.2-mysqli \
     php7.2-gd php7.2-json php-pear snmp fping mysql-client python-mysqldb \
     rrdtool subversion whois mtr-tiny ipmitool graphviz imagemagick apache2 \
-    libvirt-bin wget vim supervisor
+    libvirt-bin wget supervisor
 
 # Cleanup, this is ran to reduce the resulting size of the image.
 RUN apt-get clean autoclean && \

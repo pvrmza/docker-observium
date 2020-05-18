@@ -78,7 +78,7 @@ Either follow the choice A. or B. below to run Observium.
 ### B. Use Docker Composer
 - Run both database and observium containers.
 ```
-  $ git clone https://github.com/pvrmza/docker-observium.git .
+  $ git clone https://github.com/pvrmza/docker-observium.git 
   $ cd docker-observium
   $ cp env_mysql_example .env_mysql
   $ cp env_observium_example .env_observium
