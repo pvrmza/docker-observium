@@ -23,6 +23,16 @@ All environment variables starting OBSERVIUM_ will be transformed to $config and
 
 List of variables and default values: https://github.com/pvrmza/docker-observium/blob/master/files/defaults.inc.php
 
+### Export Change Config in Observium
+You can export the configuration values of an instance that is running and save it in the correct format as a file with environment variables.
+Download https://github.com/pvrmza/docker-observium/blob/master/files/export_config.php to your observium instance and run it from the command line
+
+```
+  $ cd /opt/observium
+  $ wget https://github.com/pvrmza/docker-observium/blob/master/files/export_config.php -O export_config.php
+  $ chmod u+x export_config.php
+  $ ./export_config.php > env_observium
+```
 
 ### Hosts file: /config/hosts
 Add host from /config/hosts to /etc/hosts and then add device to Observium
