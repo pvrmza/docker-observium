@@ -29,7 +29,7 @@ Download https://github.com/pvrmza/docker-observium/blob/master/files/export_con
 
 ```
   $ cd /opt/observium
-  $ wget https://github.com/pvrmza/docker-observium/blob/master/files/export_config.php -O export_config.php
+  $ wget https://raw.githubusercontent.com/pvrmza/docker-observium/master/files/export_config.php -O export_config.php
   $ chmod u+x export_config.php
   $ ./export_config.php > env_observium
 ```

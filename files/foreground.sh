@@ -19,7 +19,7 @@ chown www-data:www-data /config/rrd
 #######
 rm -rf /opt/observium/config.php 
 echo "<?php" > /config/config.php
-# ENVIROMET to CONFIG
+# ENVIRONMENT to CONFIG
 while IFS= read -r line
 do   
   var=`echo $line | cut -d = -f 1 |sed "s/OBSERVIUM_/['/g" | sed "s/__/']['/g" | sed "s/$/']/g" `
@@ -59,12 +59,18 @@ if [ -e /config/devices  ]; then
  	./add_device.php /config/devices
 fi	
 
-# Perform Initial Discovery ... in backgound
-#./discovery.php -h all & 
+#######
+# timezone
+if [ -f /usr/share/zoneinfo/$TZ ]; then
+  echo $TZ > /etc/timezone 
+  rm /etc/localtime &&  ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
+  dpkg-reconfigure -f noninteractive tzdata 
+
+  echo "date.timezone=$TZ" > /etc/php/7.2/apache2/conf.d/99_datatime.ini 
+fi
+
+
+
+
 ####################################3
-# cron
-# export env 
-# printenv | egrep ^OBSERVIUM | sort -u | sed 's/^\(.*\)$/export \1/g' > /etc/cron.env
-# chmod 500 /etc/cron.env
-#
 supervisord -c /etc/supervisord.conf

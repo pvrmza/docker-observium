@@ -25,7 +25,7 @@ services:
     volumes:
       - config:/config
     ports:
-      - "80:80"
+      - "80"
 
 volumes:
   db_data:
