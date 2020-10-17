@@ -17,9 +17,8 @@ chown www-data:www-data /config/logs
 chown www-data:www-data /config/rrd 
 
 #######
-rm -rf /opt/observium/config.php 
-echo "<?php" > /config/config.php
 # ENVIRONMENT to CONFIG
+echo "<?php" > /opt/observium/config.php
 while IFS= read -r line
 do   
   var=`echo $line | cut -d = -f 1 |sed "s/OBSERVIUM_/['/g" | sed "s/__/']['/g" | sed "s/$/']/g" `
@@ -29,8 +28,8 @@ do
     *) echo "\$config$var=\"$value\";" >> /config/config.php ;;
   esac
 done < <(printenv | egrep ^OBSERVIUM | sort -u)
-echo "?>" >> /config/config.php
-ln -s /config/config.php /opt/observium/config.php 
+echo "?>" >> /opt/observium/config.php 
+
 
 #######
 while ! mysqladmin ping -h"$OBSERVIUM_db_host" --silent; do
@@ -42,9 +41,12 @@ done
 cd /opt/observium 
 # Setup the MySQL database and insert the default schema
 ./discovery.php -u
-# add user
-./adduser.php $OBSERVIUM_ADMIN_USER $OBSERVIUM_ADMIN_PASS 10
-#####
+
+if test -v OBSERVIUM_ADMIN_USER; then
+  # add user
+  ./adduser.php $OBSERVIUM_ADMIN_USER $OBSERVIUM_ADMIN_PASS 10
+  #####
+fi
 
 # import devices
 if [ -e /config/hosts  ]; then 
@@ -61,14 +63,15 @@ fi
 
 #######
 # timezone
-if [ -f /usr/share/zoneinfo/$TZ ]; then
-  echo $TZ > /etc/timezone 
-  rm /etc/localtime &&  ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
-  dpkg-reconfigure -f noninteractive tzdata 
-
-  echo "date.timezone=$TZ" > /etc/php/7.2/apache2/conf.d/99_datatime.ini 
+if test -v TZ && [ `readlink /etc/localtime` != "/usr/share/zoneinfo/$TZ" ]; then
+  if [ -f /usr/share/zoneinfo/$TZ ]; then
+    echo $TZ > /etc/timezone 
+    rm /etc/localtime 
+    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime 
+    dpkg-reconfigure -f noninteractive tzdata 
+    echo "date.timezone=$TZ" > /etc/php/7.4/apache2/conf.d/99_datatime.ini 
+  fi
 fi
-
 
 
 

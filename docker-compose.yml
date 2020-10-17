@@ -17,15 +17,15 @@ services:
       - db
     links:
       - db:db
-    #image: docker-observium:200429
-    image: pvrmza/docker-observium
+    image: docker-observium:201017
+    #image: pvrmza/docker-observium
     restart: always
     env_file:
       - .env_observium
     volumes:
       - config:/config
     ports:
-      - "80"
+      - "80:80"
 
 volumes:
   db_data:
