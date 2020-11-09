@@ -24,10 +24,10 @@ do
   var=`echo $line | cut -d = -f 1 |sed "s/OBSERVIUM_/['/g" | sed "s/__/']['/g" | sed "s/$/']/g" `
   value=`echo $line | cut -d = -f 2- `
   case $value in
-    1|0|TRUE|FALSE|\"*|\'*) echo "\$config$var=$value;" >> /config/config.php ;;
-    *) echo "\$config$var=\"$value\";" >> /config/config.php ;;
+    1|0|TRUE|FALSE|\"*|\'*) echo "\$config$var=$value;" >> /opt/observium/config.php ;;
+    *) echo "\$config$var=\"$value\";" >> /opt/observium/config.php ;;
   esac
-done < <(printenv | egrep ^OBSERVIUM | sort -u)
+done < <(printenv | egrep ^OBSERVIUM_ | sort -u)
 echo "?>" >> /opt/observium/config.php 
 
 
