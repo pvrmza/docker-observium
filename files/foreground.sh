@@ -13,8 +13,8 @@ mkdir -p /config/logs && mkdir -p /config/rrd
 rm -rf /opt/observium/logs /opt/observium/rrd 
 ln -s /config/logs /opt/observium/logs 
 ln -s /config/rrd /opt/observium/rrd 
-chown www-data:www-data /config/logs 
-chown www-data:www-data /config/rrd 
+chown www-data:www-data /config/logs -R
+chown www-data:www-data /config/rrd  -R
 
 #######
 # ENVIRONMENT to CONFIG
