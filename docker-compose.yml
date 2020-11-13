@@ -17,8 +17,8 @@ services:
       - db
     links:
       - db:db
-    image: docker-observium:20201113
-    #image: pvrmza/docker-observium
+    #image: docker-observium:20201113
+    image: pvrmza/docker-observium
     restart: always
     env_file:
       - .env_observium
