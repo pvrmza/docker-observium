@@ -16,20 +16,27 @@ ln -s /config/rrd /opt/observium/rrd
 chown www-data:www-data /config/logs -R
 chown www-data:www-data /config/rrd  -R
 
-#######
-# ENVIRONMENT to CONFIG
-echo "<?php" > /opt/observium/config.php
-while IFS= read -r line
-do   
-  var=`echo $line | cut -d = -f 1 |sed "s/OBSERVIUM_/['/g" | sed "s/__/']['/g" | sed "s/$/']/g" `
-  value=`echo $line | cut -d = -f 2- `
-  case $value in
-    1|0|TRUE|FALSE|\"*|\'*) echo "\$config$var=$value;" >> /opt/observium/config.php ;;
-    *) echo "\$config$var=\"$value\";" >> /opt/observium/config.php ;;
-  esac
-done < <(printenv | egrep ^OBSERVIUM_ | sort -u)
-echo "?>" >> /opt/observium/config.php 
 
+
+if test -v OBSERVIUM_ALLCONFIG; then
+  echo "<?php" > /opt/observium/config.php
+  echo $OBSERVIUM_ALLCONFIG | base64 -d >> /opt/observium/config.php
+  echo "?>" >> /opt/observium/config.php 
+else
+  #######
+  # ENVIRONMENT to CONFIG
+  echo "<?php" > /opt/observium/config.php
+  while IFS= read -r line
+  do   
+    var=`echo $line | cut -d = -f 1 |sed "s/OBSERVIUM_/['/g" | sed "s/__/']['/g" | sed "s/$/']/g" `
+    value=`echo $line | cut -d = -f 2- `
+    case $value in
+      1|0|TRUE|FALSE|\"*|\'*) echo "\$config$var=$value;" >> /opt/observium/config.php ;;
+      *) echo "\$config$var=\"$value\";" >> /opt/observium/config.php ;;
+    esac
+  done < <(printenv | egrep ^OBSERVIUM_ | sort -u)
+  echo "?>" >> /opt/observium/config.php 
+fi
 
 #######
 while ! mysqladmin ping -h"$OBSERVIUM_db_host" --silent; do
