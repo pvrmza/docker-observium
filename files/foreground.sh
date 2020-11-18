@@ -39,10 +39,12 @@ else
 fi
 
 #######
-while ! mysqladmin ping -h"$OBSERVIUM_db_host" --silent; do
-	echo "Waiting... $OBSERVIUM_db_host not is alive..."
-    sleep 5
-done
+if test -v OBSERVIUM_db_host; then
+  while ! mysqladmin ping -h"$OBSERVIUM_db_host" --silent; do
+  	echo "Waiting... $OBSERVIUM_db_host not is alive..."
+      sleep 5
+  done
+fi
 
 # Initial Setup
 cd /opt/observium 
