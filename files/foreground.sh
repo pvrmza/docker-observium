@@ -56,6 +56,11 @@ if test -v OBSERVIUM_ADMIN_USER; then
   ./adduser.php $OBSERVIUM_ADMIN_USER $OBSERVIUM_ADMIN_PASS 10
   #####
 fi
+if test -v OBSERVIUM_ADMIN_USER; then
+  # remame crontag
+  cp /etc/cron.d/o2ipam.sh /etc/cron.d/o2ipam
+fi
+
 
 # import devices
 if [ -e /config/hosts  ]; then 
