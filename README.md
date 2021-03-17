@@ -8,6 +8,7 @@ Observium is network monitoring with intuition. It is a low-maintenance auto-dis
 * All configurations can be added from environment variables
 * Import hosts from /config/hosts to /etc/hosts, then automatically add them to observium
 * Automatically import devices from /config/devices
+* Added [o2ipam project](https://github.com/pvrmza/o2ipam) to export Observium data to phpIPAM
 
 ### Config values
 All environment variables starting OBSERVIUM_ will be transformed to $config and added automatically to the config.php file. Double _ separates array. Example:
@@ -48,6 +49,15 @@ SNMP v3
 ```
   <hostname> [any|nanp|anp|ap] [v3] [user] [password] [enckey] [md5|sha] [aes|des] [port] [udp|udp6|tcp|tcp6]
 ```
+
+### Integrate to phpIPAM
+Configure the following environment variables and this functionality will be activated. More info in [o2ipam homepage](https://github.com/pvrmza/o2ipam) 
+ - phpipam_url=https://phpipam.micasa.local
+ - observium_url=https://observium.micasa.local
+ - phpipam_api=o2ipam
+ - phpipam_key=my-api-key
+ - phpipam_default_section=1
+
 
 ## Usage
 Either follow the choice A. or B. below to run Observium.
