@@ -10,14 +10,14 @@ services:
       - db_data:/var/lib/mysql
     ports:
       - "3306"
-
+    mem_limit: 1000m
+    mem_reservation: 300m
 
   app:
     depends_on:
       - db
     links:
       - db:db
-    #image: docker-observium:20201113
     image: pvrmza/docker-observium
     restart: always
     env_file:
@@ -26,6 +26,9 @@ services:
       - config:/config
     ports:
       - "80:80"
+    mem_limit: 1000m
+    mem_reservation: 600m
+
 
 volumes:
   db_data:

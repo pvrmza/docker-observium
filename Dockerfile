@@ -16,9 +16,8 @@ RUN apt-get update && apt-get -y dist-upgrade && \
 
 COPY files/apache-observium.conf /etc/apache2/sites-enabled/000-default.conf
 COPY files/cron-observium /etc/cron.d/observium
-COPY files/cron-o2ipam /etc/cron.d/o2ipam.sh
 COPY files/supervisord.conf /etc/supervisord.conf
-COPY files/foreground.sh /etc/foreground.sh
+COPY files/docker-entrypoint.sh /usr/local/bin/
 
 # base config
 RUN a2dismod mpm_event && \
@@ -27,19 +26,17 @@ RUN a2dismod mpm_event && \
     a2enmod rewrite && \
     echo "TLS_REQCERT\tnever" >> /etc/ldap/ldap.conf && \
     chmod 0644 /etc/cron.d/observium && \
-    chmod +x /etc/foreground.sh
+    chmod +x /usr/local/bin/docker-entrypoint.sh
 
 #
 RUN cd /opt && wget -c http://www.observium.org/observium-community-latest.tar.gz &&\
     tar zxvf observium-community-latest.tar.gz && \
     rm -rf observium-community-latest.tar.gz
 
-RUN cd /opt/observium && wget -c https://github.com/pvrmza/o2ipam/archive/main.zip &&\
-    unzip main.zip && rm -rf main.zip && mv o2ipam-main/ o2ipam
-
 #Puertos y Volumenes
 VOLUME ["/config" ]
 EXPOSE 80 
+USER www-data
 
-ENTRYPOINT ["/etc/foreground.sh"]
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 
