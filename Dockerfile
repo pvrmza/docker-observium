@@ -36,7 +36,6 @@ RUN cd /opt && wget -c http://www.observium.org/observium-community-latest.tar.g
 #Puertos y Volumenes
 VOLUME ["/config" ]
 EXPOSE 80 
-USER www-data
 
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 
