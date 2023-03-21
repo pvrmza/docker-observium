@@ -1,19 +1,20 @@
 OBSERVIUM_ADMIN_PASS=admin
-OBSERVIUM_ADMIN_USER=admin
+OBSERVIUM_ADMIN_USER=Ch4ngeME
+
 OBSERVIUM_auth_mechanism=mysql
 OBSERVIUM_db_extension=mysqli
 OBSERVIUM_db_host=db
 OBSERVIUM_db_name=observium
 OBSERVIUM_db_pass=observiumpwd
 OBSERVIUM_db_user=observium
+
 OBSERVIUM_snmp__community__0=public
+OBSERVIUM_snmp__community__1=othercommunity
+
+#
 TZ=America/Argentina/Mendoza
-VIRTUAL_HOST=observium.micasa.local
+#
+# for jwilder/nginx-proxy
+VIRTUAL_HOST=observium.local
 VIRTUAL_PORT=80
 
-##### Integrate with phpIPAM
-# phpipam_url=https://phpipam.micasa.local
-# observium_url=https://observium.micasa.local
-# phpipam_api=o2ipam
-# phpipam_key=my-api-key
-# phpipam_default_section=1
