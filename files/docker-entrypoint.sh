@@ -6,7 +6,7 @@ set -m
 #######
 # clean old pid and "fix" cron
 find /var/run/ -type f -iname \*.pid -delete
-touch /etc/crontab  /etc/cron.d/observium /etc/cron.d/php 
+touch /etc/crontab /etc/cron.d/observium /etc/cron.d/php 
 
 # observium data and logs
 mkdir -p /config/logs && mkdir -p /config/rrd 
@@ -15,7 +15,6 @@ ln -s /config/logs /opt/observium/logs
 ln -s /config/rrd /opt/observium/rrd 
 chown www-data:www-data /config/logs -R
 chown www-data:www-data /config/rrd  -R
-
 
 
 if test -v OBSERVIUM_ALLCONFIG; then
@@ -56,11 +55,6 @@ if test -v OBSERVIUM_ADMIN_USER; then
   ./adduser.php $OBSERVIUM_ADMIN_USER $OBSERVIUM_ADMIN_PASS 10
   #####
 fi
-if test -v OBSERVIUM_ADMIN_USER; then
-  # remame crontag
-  cp /etc/cron.d/o2ipam.sh /etc/cron.d/o2ipam
-fi
-
 
 # import devices
 if [ -e /config/hosts  ]; then 
@@ -87,7 +81,11 @@ if test -v TZ && [ `readlink /etc/localtime` != "/usr/share/zoneinfo/$TZ" ]; the
   fi
 fi
 
-
+if test -v OBSERVIUM_DISABLECRON; then
+  # disable cron in supervisor
+  sed -i 's/autostart=true/autostart=false/g' supervisord.conf
+  #####
+fi
 
 ####################################3
 supervisord -c /etc/supervisord.conf
