@@ -8,6 +8,9 @@
  * @author     Pablo Vargas <pablo@pampa.cloud>
  * @copyright  GNU GPL v3.0
  *
+ *
+ * Use:
+ *    php export_config.php 
  */
 
 chdir(dirname($argv[0]));
@@ -19,13 +22,13 @@ if (OBS_DEBUG) { print_versions(); }
 
 function export_config($base,$array) {
         foreach($array as $name => $value) {
-        if (is_array($value)) {
-                $newbase = $base.$name.'__';
-                export_config($newbase,$value);
-        } else {
-                echo "$base$name=\"$value\" \n";
+                if (is_array($value)) {
+                        $newbase = $base.$name.'__';
+                        export_config($newbase,$value);
+                } else {
+                        echo "$base$name=\"$value\" \n";
+                }
         }
-    }
 }
 
 $export=get_defined_settings();

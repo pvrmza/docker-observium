@@ -22,25 +22,22 @@ if (OBS_DEBUG) { print_versions(); }
 
 function export_config($base,$array) {
         foreach($array as $name => $value) {
-        if (is_array($value)) {
-                $newbase = $base.$name."']['";
-                export_config($newbase,$value);
-        } else {
-        		if ((is_numeric($value))||(is_bool($value)) {
-                	echo base64_encode("$base$name']=$value; \n");
+                if (is_array($value)) {
+                        $newbase = $base.$name."']['";
+                        export_config($newbase,$value);
                 } else {
-                	echo base64_encode("$base$name]=\"$value\"; \n");
+                        if ( (is_numeric($value)) || (is_bool($value)) ) {
+                                print("$base$name']=$value; \n");
+                        } else {
+                                print("$base$name']=\"$value\"; \n");
+                        }
                 }
         }
-    }
 
 }
 
 $export=get_defined_settings();
 
-#print_r($export);
-export_config("$config['",$export);
+export_config("\$config['",$export);
 
-echo "\n"
-// EOF
 ?>
