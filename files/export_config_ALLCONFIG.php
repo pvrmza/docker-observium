@@ -10,7 +10,7 @@
  *
  *
  * Use:
- *    php export_config_k8s.php | base64 -d
+ *    php ./export_config_ALLCONFIG.php | base64 
  */
 
 chdir(dirname($argv[0]));
