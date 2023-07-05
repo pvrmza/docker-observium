@@ -1,6 +1,6 @@
 
 # docker-observium unattended deploy
-not another observium in docker... Observium CE 22.12
+not another observium in docker... Observium CE 23.1.12493 (26th January 2023)
 
 Observium is network monitoring with intuition. It is a low-maintenance auto-discovering network monitoring platform supporting a wide range of device types, platforms and operating systems including Cisco, Windows, Linux, HP, Juniper, Dell, FreeBSD, Brocade, Netscaler, NetApp and many more. Observium focuses on providing a beautiful and powerful yet simple and intuitive interface to the health and status of your network. For more information, go to http://www.observium.org site.
 
@@ -102,7 +102,7 @@ Either follow the choice A. or B. below to run Observium.
   $ cd docker-observium
   $ cp env_mysql_example .env_mysql
   $ cp env_observium_example .env_observium
-  $ docker-compose up
+  $ docker-compose up -d
 ```
 
 ## Environment 
