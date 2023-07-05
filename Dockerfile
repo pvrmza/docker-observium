@@ -1,5 +1,5 @@
 # base
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 LABEL maintainer="Pablo A. Vargas <pablo@pampa.cloud>"
 
 # Environment
@@ -7,8 +7,8 @@ ENV DEBIAN_FRONTEND noninteractive
 
 # update & upgrade & install base
 RUN apt-get update && apt-get -y dist-upgrade && \
-    apt-get -y install libapache2-mod-php7.4 php7.4-cli php7.4-mysql php7.4-mysqli php7.4-gd php7.4-json php7.4-curl\
-    php-pear php7.4-ldap snmp fping mysql-client python3-mysqldb rrdtool subversion whois mtr-tiny \
+    apt-get -y install libapache2-mod-php php-cli php-mysql php-mysqli php-gd php-json php-curl\
+    php-pear php-apcu php-ldap snmp fping mysql-client python3-mysqldb rrdtool subversion whois mtr-tiny \
     ipmitool graphviz imagemagick apache2 python3-pymysql python-is-python3 \
     libvirt-clients wget supervisor cron unzip && \
     apt-get clean autoclean && apt-get autoremove -y && \
@@ -22,7 +22,7 @@ COPY files/docker-entrypoint.sh /usr/local/bin/
 # base config
 RUN a2dismod mpm_event && \
     a2enmod mpm_prefork && \
-    a2enmod php7.4 && \
+    a2enmod php8.1 && \
     a2enmod rewrite && \
     echo "TLS_REQCERT\tnever" >> /etc/ldap/ldap.conf && \
     chmod 0644 /etc/cron.d/observium && \

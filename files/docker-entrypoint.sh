@@ -15,7 +15,9 @@ ln -s /config/logs /opt/observium/logs
 ln -s /config/rrd /opt/observium/rrd 
 chown www-data:www-data /config/logs -R
 chown www-data:www-data /config/rrd  -R
-
+# cache
+mkdir -p /tmp/observium_cache
+chown www-data:www-data /tmp/observium_cache -R
 
 if test -v OBSERVIUM_ALLCONFIG; then
   echo "<?php" > /opt/observium/config.php
@@ -77,13 +79,14 @@ if test -v TZ && [ `readlink /etc/localtime` != "/usr/share/zoneinfo/$TZ" ]; the
     rm /etc/localtime 
     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime 
     dpkg-reconfigure -f noninteractive tzdata 
-    echo "date.timezone=$TZ" > /etc/php/7.4/apache2/conf.d/99_datatime.ini 
+    echo "date.timezone=$TZ" > /etc/php/8.1/apache2/conf.d/99_datatime.ini 
   fi
 fi
 
+#you can run cron in another container
 if test -v OBSERVIUM_DISABLECRON; then
   # disable cron in supervisor
-  sed -i 's/autostart=true/autostart=false/g' supervisord.conf
+  sed -i 's/autostart=true/autostart=false/g' /etc/supervisord.conf
   #####
 fi
 

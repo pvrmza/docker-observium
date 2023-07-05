@@ -1,15 +1,22 @@
-OBSERVIUM_ADMIN_PASS=admin
-OBSERVIUM_ADMIN_USER=Ch4ngeME
-
+OBSERVIUM_ADMIN_USER=admin
+OBSERVIUM_ADMIN_PASS=Ch4ngeME
+#
 OBSERVIUM_auth_mechanism=mysql
 OBSERVIUM_db_extension=mysqli
 OBSERVIUM_db_host=db
 OBSERVIUM_db_name=observium
 OBSERVIUM_db_pass=observiumpwd
 OBSERVIUM_db_user=observium
-
+#
 OBSERVIUM_snmp__community__0=public
 OBSERVIUM_snmp__community__1=othercommunity
+OBSERVIUM_snmp__max-rep=TRUE
+#
+OBSERVIUM_cache__enable=TRUE
+OBSERVIUM_cache__driver=auto
+#
+# you can run cron in another container
+#OBSERVIUM_DISABLECRON=true
 
 #
 TZ=America/Argentina/Mendoza
