@@ -10,7 +10,7 @@ OBSERVIUM_db_user=observium
 #
 OBSERVIUM_snmp__community__0=public
 OBSERVIUM_snmp__community__1=othercommunity
-OBSERVIUM_snmp__max-rep=TRUE
+OBSERVIUM_snmp__max_rep=TRUE
 #
 OBSERVIUM_cache__enable=TRUE
 OBSERVIUM_cache__driver=auto
